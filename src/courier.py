@@ -48,12 +48,13 @@ class Courier:
         self.topics[topic] = callback
 
     def run(self):
+        self.establish_connection()
         try:
             self.client.loop_forever()
             while not self.client.connected_flag:
                 print("Waiting to connect to host...")
                 time.sleep(1)
-        except:
-            print("Disconnecting from host...")
+        except Exception as e:
+            print("Disconnecting from host with exception: {}".format(e))
             self.client.loop_stop()
             self.client.disconnect()
