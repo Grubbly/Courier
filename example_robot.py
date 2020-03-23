@@ -4,36 +4,34 @@ import RPi.GPIO as GPIO
 ##################
 """ GPIO SETUP """
 ##################
-right_motor_forward = 19
-right_motor_backward = 26
+right_motor_forward      = 19
+left_motor_forward_pin   = 26
 
-left_motor_forward = 16
-left_motor_backward = 20
+right_motor_backward_pin = 16
+left_motor_backward_pin  = 20
 
 GPIO.setmode(GPIO.BCM)
 
 GPIO.setup(right_motor_forward, GPIO.OUT)
-GPIO.setup(right_motor_backward, GPIO.OUT)
-GPIO.setup(left_motor_forward, GPIO.OUT)
-GPIO.setup(left_motor_backward, GPIO.OUT)
+GPIO.setup(left_motor_forward_pin, GPIO.OUT)
+GPIO.setup(right_motor_backward_pin, GPIO.OUT)
+GPIO.setup(left_motor_backward_pin, GPIO.OUT)
 
-pwm_r_f = GPIO.PWM(right_motor_forward, 1000)
-pwm_r_b = GPIO.PWM(right_motor_backward, 1100)
-pwm_l_f = GPIO.PWM(left_motor_forward, 1200)
-pwm_l_b = GPIO.PWM(left_motor_backward, 1300)
+pwm_l_f = GPIO.PWM(left_motor_forward_pin, 1000)
+pwm_r_f = GPIO.PWM(right_motor_forward, 1100)
+pwm_l_b = GPIO.PWM(left_motor_backward_pin, 1200)
+pwm_r_b = GPIO.PWM(right_motor_backward_pin, 1300)
 
 pwm_r_f.start(0)
 pwm_r_b.start(0)
 pwm_l_f.start(0)
 pwm_l_b.start(0)
-print("Finished PWM/GPIO init")
-
 
 #########################
 """ NETWORK CONSTANTS """
 #########################
-IP_ADDRESS = "192.168.227.23"
-PORT = 1883
+IP_ADDRESS = "127.0.0.1"
+PORT       = 1883
 
 
 ##################
@@ -70,5 +68,11 @@ if __name__ == '__main__':
     # it to connect to my robot on the network.
     courier = courier.Courier("TinyBot", IP_ADDRESS, PORT)
     courier.add_topic("/drive", drive)
-    courier.run()
-
+    
+    try:
+        courier.run()
+    except KeyboardInterrupt:
+        print("Stopping robot...")
+        # More cleanup stuff here...
+    finally:
+        GPIO.cleanup()
