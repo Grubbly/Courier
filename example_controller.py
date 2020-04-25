@@ -5,7 +5,7 @@ import time
 #################
 """ CONSTANTS """
 #################
-IP_ADDRESS = "192.168.227.23"
+IP_ADDRESS = "172.20.10.13"
 PORT       = 1883
 SPEED      = 80   # 80% speed
 TOPIC      = "/drive"

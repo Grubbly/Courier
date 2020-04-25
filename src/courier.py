@@ -1,9 +1,11 @@
 import paho.mqtt.client as mqtt
 import courier_logger as CourierLogger
 import time
+import json
+from datetime import datetime
 
 class Courier:
-    def __init__(self, name, ip, port, logpath=None):
+    def __init__(self, name, ip, port, logpath=None, monitor=False):
         self.name = name
         self.ip = ip
         self.port = port
@@ -11,8 +13,51 @@ class Courier:
         self.client.connected_flag = False
         self.topics = {}
 
-        self.logger = CourierLogger(path=logpath)
+        self.logger = CourierLogger.CourierLogger(path=logpath)
         self.logger.info("Courier instance name: {}".format(self.name))
+        
+        self.monitorPath = "monitor/src/data/mqtt_data.json"
+        self.monitor = monitor
+        if self.monitor:
+            self.resetMonitor()
+
+    def resetMonitor(self):
+        with open(self.monitorPath, 'w') as file:
+            file.write("""{"topics": [],"current": {},"history": {}}""")
+
+    def monitorTopic(self, topic):
+        with open(self.monitorPath, 'r') as file:
+            data = json.load(file)
+        data['topics'].append(topic)
+        with open(self.monitorPath, 'w') as file:
+            json.dump(data, file)
+
+    def monitorCurrent(self, topic, val):
+        with open(self.monitorPath, 'r') as file:
+            data = json.load(file)
+        data['current'][topic] = val
+        with open(self.monitorPath, 'w') as file:
+            json.dump(data, file)
+
+    def monitorHistory(self, topic, val):
+        with open(self.monitorPath, 'r') as file:
+            data = json.load(file)
+        data['history'][topic].append({
+            "payload": val,
+            "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S %p")
+        })
+        with open(self.monitorPath, 'w') as file:
+            json.dump(data, file)
+
+    def log(self, type, msg):
+        if type == "info":
+            self.logger.info(msg)
+        elif type == "warning":
+            self.logger.warning(msg)
+        elif type == "error":
+            self.logger.error(msg)
+        else:
+            self.logger.debug(msg)
 
     def subscribe(self):
         formatted_topics = []
@@ -26,6 +71,11 @@ class Courier:
             if msg != None:
                 payload = msg.payload.decode("utf-8")
                 self.logger.info("Topic: {} received the payload: {}".format(msg.topic, payload))
+                
+                if self.monitor:
+                    self.monitorCurrent(msg.topic, payload)
+                    self.monitorHistory(msg.topic, payload)
+
                 callback = self.topics[msg.topic]
                 callback(payload)
         return on_message_callback
@@ -58,6 +108,7 @@ class Courier:
     def add_topic(self, topic, callback):
         self.topics[topic] = callback
         self.logger.info("Added topic: {}".format(topic))
+        self.monitorTopic(topic)
 
     def run(self):
         self.establish_connection()
