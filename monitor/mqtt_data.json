@@ -1,0 +1,86 @@
+{
+    "topics": [
+        "/drive", "/right_encoder", "/left_encoder", "/play_sound", "/emergency_stop"
+    ],
+    "current": {
+        "/drive": "r80",
+        "/right_encoder": "12",
+        "/left_encoder": "10",
+        "/play_sound": "beep",
+        "/emergency_stop": ""
+    },
+    "history": {
+        "/drive": [
+            {
+                "payload": "r80",
+                "timestamp": "2020-04-25 20:59:05"
+            },
+            {
+                "payload": "l80",
+                "timestamp": "2020-04-25 20:59:09"
+            },
+            {
+                "payload": "r80",
+                "timestamp": "2020-04-25 21:00:10"
+            }
+        ],
+        "/right_encoder": [
+            {
+                "payload": "7",
+                "timestamp": "2020-04-25 20:59:05"
+            },
+            {
+                "payload": "8",
+                "timestamp": "2020-04-25 20:59:06"
+            },
+            {
+                "payload": "9",
+                "timestamp": "2020-04-25 20:59:07"
+            },
+            {
+                "payload": "10",
+                "timestamp": "2020-04-25 20:59:08"
+            },
+            {
+                "payload": "11",
+                "timestamp": "2020-04-25 20:59:09"
+            },
+            {
+                "payload": "12",
+                "timestamp": "2020-04-25 20:59:11"
+            }
+        ],
+        "/left_encoder": [
+            {
+                "payload": "5",
+                "timestamp": "2020-04-25 20:59:05"
+            },
+            {
+                "payload": "6",
+                "timestamp": "2020-04-25 20:59:06"
+            },
+            {
+                "payload": "7",
+                "timestamp": "2020-04-25 20:59:07"
+            },
+            {
+                "payload": "8",
+                "timestamp": "2020-04-25 20:59:08"
+            },
+            {
+                "payload": "9",
+                "timestamp": "2020-04-25 20:59:09"
+            },
+            {
+                "payload": "10",
+                "timestamp": "2020-04-25 20:59:11"
+            }
+        ],
+        "/play_sound": [
+            {
+                "payload": "beep",
+                "timestamp": "2020-04-25 20:59:05"
+            }
+        ]
+    }
+}

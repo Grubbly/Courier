@@ -5,7 +5,7 @@ import time
 #################
 """ CONSTANTS """
 #################
-IP_ADDRESS = "172.20.10.13"
+IP_ADDRESS = "192.168.227.20"
 PORT       = 1883
 SPEED      = 80   # 80% speed
 TOPIC      = "/drive"
@@ -24,7 +24,6 @@ if __name__ == '__main__':
             # Drive the right motor forward at 80% speed
             if keyboard.is_pressed('1'):
                 payload = "{}{}".format('r', SPEED)
-                keyboard
 
             # Drive the left motor forward at 80% speed
             elif keyboard.is_pressed('2'):

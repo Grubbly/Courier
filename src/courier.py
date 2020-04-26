@@ -1,5 +1,5 @@
 import paho.mqtt.client as mqtt
-import courier_logger as CourierLogger
+import src.courier_logger as CourierLogger
 import time
 import json
 from datetime import datetime
@@ -42,6 +42,10 @@ class Courier:
     def monitorHistory(self, topic, val):
         with open(self.monitorPath, 'r') as file:
             data = json.load(file)
+
+        if topic not in data['history']:
+            data['history'][topic] = []
+
         data['history'][topic].append({
             "payload": val,
             "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S %p")

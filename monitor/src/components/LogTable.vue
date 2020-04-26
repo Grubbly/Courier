@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import LogData from '@/data/mqtt_data.json'
+import LogData from '../../mqtt_data.json'
 
 export default {
     name: 'LogTable',
