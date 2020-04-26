@@ -1,0 +1,52 @@
+{
+    "topics": [
+        "/drive", "/test", "blessed", "blah", "asdf"
+    ],
+    "current": {
+        "/drive": "r80"
+    },
+    "history": {
+        "/drive": [
+            {
+                "payload": "r80",
+                "timestamp": 0
+            },
+            {
+                "payload": "l80",
+                "timestamp": 1
+            },
+            {
+                "payload": "r80",
+                "timestamp": 2
+            }
+        ],
+        "/test": [
+            {
+                "payload": "r80",
+                "timestamp": 0
+            },
+            {
+                "payload": "l80",
+                "timestamp": 1
+            },
+            {
+                "payload": "r80",
+                "timestamp": 2
+            }
+        ],
+        "blessed": [
+            {
+                "payload": "r80",
+                "timestamp": 0
+            },
+            {
+                "payload": "l80",
+                "timestamp": 1
+            },
+            {
+                "payload": "r80",
+                "timestamp": 2
+            }
+        ]
+    }
+}
